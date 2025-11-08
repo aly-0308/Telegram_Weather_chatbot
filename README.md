@@ -69,7 +69,7 @@ Never paste your secret token directly into your code. You must use an environme
 
 ### Step 3: Create Your `.gitignore` File
 
-To protect your secrets, you must tell Git to ignore your `.env` file.
+To protect your secret
 
 1.  In your project folder, create a new file named `.gitignore`.
 2.  Add the following lines. This will prevent you from ever accidentally uploading your secrets, database, or model files to GitHub.
@@ -90,24 +90,11 @@ To protect your secrets, you must tell Git to ignore your `.env` file.
 
 ### Step 4: Install Dependencies
 
-1.  Create a file named `requirements.txt` in your project folder.
-2.  Copy the following list of libraries into it:
-
-    ```
-    pandas
-    scikit-learn
-    nltk
-    spacy
-    requests
-    geopy
-    python-telegram-bot
-    python-dotenv
-    ```
-3.  Open your terminal, navigate to your project folder, and run this command to install everything:
+1.  Open your terminal, navigate to your project folder, and run this command to install everything:
     ```sh
     pip install -r requirements.txt
     ```
-4.  You also need to download the `spaCy` language model:
+2.  You also need to download the `spaCy` language model:
     ```sh
     python -m spacy download en_core_web_sm
     ```
@@ -135,7 +122,7 @@ You are now ready to launch your chatbot.
 2.  You should see the "Loading models..." and "Bot is running..." messages.
 3.  Open Telegram, find your bot by its username, and send it a message!
 
-### Step 7: Keep it Running (Deployment for Your Professor)
+### Step 7: Keep it Running
 
 Your bot will stop as soon as you close the terminal. To keep it running 24/7 for your professor to test, you must host it on a server. The easiest way is with a free cloud service.
 
@@ -152,4 +139,5 @@ Your bot will stop as soon as you close the terminal. To keep it running 24/7 fo
     ```sh
     python chatbot.py
     ```
+
 Railway will automatically read your `requirements.txt`, install everything, and run your bot. It will stay online 24/7.
