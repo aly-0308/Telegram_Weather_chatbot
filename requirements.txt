@@ -1,0 +1,15 @@
+# NLU and Preprocessing
+nltk==3.9.2
+scikit-learn==1.7.2
+spacy==3.8.7
+
+# Data Handling
+pandas==2.3.3
+
+# API and Web
+geopy==2.4.1
+python-telegram-bot==22.5
+requests==2.32.5
+
+# Utilities
+python-dotenv==1.1.1

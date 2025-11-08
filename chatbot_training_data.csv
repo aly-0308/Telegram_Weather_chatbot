@@ -1,0 +1,112 @@
+query,intent,time_entity
+What is the temperature tomorrow morning ?,ask_temperature,tomorrow
+What is the temperature tomorrow afternoon ?,ask_temperature,tomorrow
+What is the temperature ?,ask_temperature,no_time
+What is the current temperature ?,ask_temperature,now
+What is the temperature today morning ?,ask_temperature,today
+how hot will it be today?,ask_temperature,today
+what's the temp like right now?,ask_temperature,now
+give me the temperature forecast for tomorrow,ask_temperature,tomorrow
+is it cold outside?,ask_temperature,no_time
+will it be warm later today?,ask_temperature,today
+,,
+Is it sunny or cloudy tomorrow morning ?,ask_weather_conditions,tomorrow
+Is it sunny or cloudy ?,ask_weather_conditions,no_time
+Is it sunny or cloudy currently ?,ask_weather_conditions,now
+Is it sunny or cloudy today morning ?,ask_weather_conditions,today
+what's the weather like?,ask_weather_conditions,no_time
+should I expect clear skies today?,ask_weather_conditions,today
+what are the conditions for tomorrow?,ask_weather_conditions,tomorrow
+how's the weather looking right now?,ask_weather_conditions,now
+is it looking nice out there?,ask_weather_conditions,no_time
+,,
+Tell me the wind speed currently,ask_wind_speed,now
+is it windy today?,ask_wind_speed,today
+how strong is the wind now?,ask_wind_speed,now
+what's the wind forecast for tomorrow?,ask_wind_speed,tomorrow
+tell me about the wind,ask_wind_speed,no_time
+will it be breezy later?,ask_wind_speed,today
+,,
+Will it rain this evening?,ask_rain,today
+should I take an umbrella today?,ask_rain,today
+any chance of rain tomorrow?,ask_rain,tomorrow
+is it raining right now?,ask_rain,now
+what is the precipitation forecast?,ask_rain,no_time
+does it look like rain?,ask_rain,today
+,,
+How much current snowfall is expected?,ask_snowfall,now
+is it going to snow today?,ask_snowfall,today
+how much snow are we getting tomorrow?,ask_snowfall,tomorrow
+Any information about snow depth now?,ask_snow_depth,now
+is there any snow on the ground?,ask_snow_depth,now
+check for snow accumulation,ask_snow_depth,no_time
+will we see any flakes later?,ask_snowfall,today
+,,
+Hello! Hi there.,greet,no_time
+hey there,greet,no_time
+good morning,greet,no_time
+how are you,greet,no_time
+hi,greet,no_time
+good day,greet,no_time
+good afternoon,greet,no_time
+morning,greet,no_time
+good evening,greet,no_time
+greetings,greet,no_time
+howdy,greet,no_time
+nice to meet,greet,no_time
+how is it going,greet,no_time
+how is life,greet,no_time
+how do you do,greet,no_time
+how r u,greet,no_time
+are you ok,greet,no_time
+hows it hanging,greet,no_time
+hows it going,greet,no_time
+,,
+what's the UV index for tomorrow?,unknown_intent,tomorrow
+book me a flight to Berlin,unknown_intent,no_time
+what time does the sun set today?,unknown_intent,today
+tell me a joke,unknown_intent,no_time
+where is the closest restaurant?,unknown_intent,no_time
+Random query.,unknown_intent,no_time
+,,
+bye,goodbye,no_time
+good bye,goodbye,no_time
+goodbye,goodbye,no_time
+good by,goodbye,no_time
+ok good bye,goodbye,no_time
+see ya,goodbye,no_time
+c u,goodbye,no_time
+cu,goodbye,no_time
+see you later,goodbye,no_time
+laters,goodbye,no_time
+laters baby,goodbye,no_time
+good night,goodbye,no_time
+cee you later,goodbye,no_time
+goodbye,goodbye,no_time
+have a nice day,goodbye,no_time
+see you around,goodbye,no_time
+bye bye,goodbye,no_time
+thanks,goodbye,no_time
+thank you,goodbye,no_time
+thanks very much,goodbye,no_time
+cheers,goodbye,no_time
+exit,goodbye,no_time
+quit,goodbye,no_time
+great talk,goodbye,no_time
+,,
+what can you do,ask_capabilities,no_time
+what are your capabilities,ask_capabilities,no_time
+what are you good at,ask_capabilities,no_time
+what are you good for,ask_capabilities,no_time
+any instructions,ask_capabilities,no_time
+instructions,ask_capabilities,no_time
+how do i use this,ask_capabilities,no_time
+info,ask_capabilities,no_time
+information,ask_capabilities,no_time
+help,ask_capabilities,no_time
+can you help me,ask_capabilities,no_time
+who are you,ask_capabilities,no_time
+are you a bot,ask_capabilities,no_time
+what is your name,ask_capabilities,no_time
+are you human,ask_capabilities,no_time
+what are you,ask_capabilities,no_time
