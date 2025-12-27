@@ -51,7 +51,7 @@ responses_df = pd.DataFrame({
         "The wind speed {time_period} is {wind_speed}.",
         "The rainfall {time_period} is {rain}.",
         "The snowfall {time_period} is {snowfall}.",
-        "The snow depth {time_period} is {snow_depth}.",s
+        "The snow depth {time_period} is {snow_depth}.",
         "Hello! How can I help you today?",
         "I'm sorry, I don't understand that request.",
         "I can provide weather information like temperature, conditions, and wind speed for today and tomorrow.",
