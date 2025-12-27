@@ -4,17 +4,15 @@ import pandas as pd
 import pickle
 import time
 import sys  
-from nltk.tokenize import RegexpTokenizer
-from nltk.corpus import stopwords
-from nltk.stem.wordnet import WordNetLemmatizer
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
-from sklearn.feature_extraction import DictVectorizer
 from sklearn.multioutput import MultiOutputClassifier
-from sklearn.naive_bayes import MultinomialNB
+from nltk.tokenize import RegexpTokenizer
+from nltk.stem.wordnet import WordNetLemmatizer
+from sklearn.feature_extraction import DictVectorizer
+from sklearn.linear_model import LogisticRegression
 
 # --- 1. Getting the training and testing data Functions 
-
 def read_csv_file(file_name):
     """Reads a CSV file and handles common errors."""
     try:
@@ -69,7 +67,7 @@ def get_train_test_data():
 
     while True:
         try:
-            file_name = input("Enter the name of the training dataset CSV file (e.g., chatbot_training_data): ")
+            file_name = input("Enter the name of the training dataset CSV file (e.g., chatbot_training_testing_data): ")
             full_path = file_name + '.csv'
             print('*' * 125)
             
@@ -114,7 +112,6 @@ def get_train_test_data():
             print('*' * 125)
 
 # --- 2. PREPROCESSING AND FEATURE EXTRACTION FUNCTIONS ---
-
 def preprocess(sentence):
     """Converts sentence to lowercase, tokenizes, and removes stopwords."""
     sentence = sentence.lower()
@@ -154,40 +151,46 @@ def extract_features_from_doc(data):
         times.append(row['time_entity'])
     return corpus, intents, times
 
-# --- 2. MODEL TRAINING FUNCTION ---
-
+# --- 3. MODEL TRAINING FUNCTION (NLTK Features + Logistic Regression) ---
 def train_model(training_testing_df):
-    """Trains the MultiOutputClassifier and saves the classifier and vectorizer to files."""
-
+    """
+    Trains the MultiOutputClassifier using NLTK-based features
+    and a Logistic Regression model.
+    """
     print('=' * 51 + ' Starting model training... ' + '=' * 51)
     model_training_start_time = time.time()
     
+    # 1. Use your NLTK pipeline to extract features
     corpus, intents, times = extract_features_from_doc(training_testing_df)
 
+    # 2. Use DictVectorizer (since we have dictionaries of features)
     vectorizer = DictVectorizer()
     X = vectorizer.fit_transform(corpus)
-    y = pd.DataFrame({'intent': intents, 'time': times})
+    
+    # 3. Create the target DataFrame
+    y = pd.DataFrame({'intent': intents, 'time_entity': times})
 
+    # 4. Split the data
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-    classifier = MultiOutputClassifier(MultinomialNB())
+    # 5. Use LogisticRegression (the more powerful model)
+    classifier = MultiOutputClassifier(LogisticRegression(max_iter=1000))
     classifier.fit(X_train, y_train)
 
-    # Evaluate the model.
+    # 6. Evaluate the model
     predictions = classifier.predict(X_test)
     intent_accuracy = accuracy_score(y_test['intent'], predictions[:, 0])
-    time_accuracy = accuracy_score(y_test['time'], predictions[:, 1])
+    time_accuracy = accuracy_score(y_test['time_entity'], predictions[:, 1]) 
     
     print(f"Model Accuracy for Intents: {intent_accuracy * 100:.2f}%")
     print(f"Model Accuracy for Time: {time_accuracy * 100:.2f}%")
     print("Model training complete.")
-    print('*' * 125)
     
     model_training_end_time = time.time()
     print(f"Model Training finished in {model_training_end_time - model_training_start_time:.2f} seconds.")
     print('*' * 125)
     
-    # Save the trained components to files
+    # 7. Save the components
     print("Saving model components to disk...")
     with open('weather_chatbot_classifier.pkl', 'wb') as f:
         pickle.dump(classifier, f)
@@ -197,12 +200,10 @@ def train_model(training_testing_df):
     print("Training and saving complete.")
     print('-' * 125)
 
-
 # --- 4. SCRIPT ENTRY POINT ---
 if __name__ == "__main__":
     
     # Download NLTK data needed for preprocessing
-    nltk.download('stopwords', quiet=True)
     nltk.download('averaged_perceptron_tagger', quiet=True)
     nltk.download('wordnet', quiet=True)
     nltk.download('averaged_perceptron_tagger_eng', quiet=True)

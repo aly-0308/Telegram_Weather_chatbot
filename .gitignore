@@ -1,0 +1,11 @@
+# Python cache
+__pycache__/
+
+# Environment file with secrets
+.env
+
+# Database file
+*.db
+
+# Saved model files
+*.pkl

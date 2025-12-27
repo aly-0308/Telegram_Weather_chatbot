@@ -16,9 +16,11 @@ from telegram.ext import Application, CommandHandler, MessageHandler, filters, C
 from nltk.tokenize import RegexpTokenizer
 from nltk.stem.wordnet import WordNetLemmatizer
 from sklearn.feature_extraction import DictVectorizer
+from sklearn.linear_model import LogisticRegression
+from sklearn.multioutput import MultiOutputClassifier
 
 # --- 1. LOAD PRE-TRAINED MODELS (Loaded ONCE at startup) ---
-print("Loading models...")
+# print("Loading models...")
 try:
     with open('weather_chatbot_classifier.pkl', 'rb') as f:
         CLASSIFIER = pickle.load(f)
@@ -27,14 +29,12 @@ try:
     NLP_MODEL = spacy.load('en_core_web_sm')
     GEOLOCATOR = Nominatim(user_agent="weather_chatbot_telegram")
     
-    # Load and check the USE_MOCK_DATA environment variable
     load_dotenv()
     USE_MOCK_DATA_STR = os.getenv('USE_MOCK_DATA', 'True')
     USE_MOCK_DATA = USE_MOCK_DATA_STR.lower() in ('true', '1', 't')
     
     print("Models loaded successfully.")
     print(f"** Current Mode: {'MOCK' if USE_MOCK_DATA else 'LIVE API'} **")
-
 except FileNotFoundError as e:
     print(f"Error: Model file not found. {e}")
     sys.exit("Please run train.py first to create the model files.")
@@ -51,7 +51,7 @@ responses_df = pd.DataFrame({
         "The wind speed {time_period} is {wind_speed}.",
         "The rainfall {time_period} is {rain}.",
         "The snowfall {time_period} is {snowfall}.",
-        "The snow depth {time_period} is {snow_depth}.",
+        "The snow depth {time_period} is {snow_depth}.",s
         "Hello! How can I help you today?",
         "I'm sorry, I don't understand that request.",
         "I can provide weather information like temperature, conditions, and wind speed for today and tomorrow.",
@@ -86,7 +86,7 @@ def word_feats(words):
 # --- 4. CHATBOT HELPER FUNCTIONS ---
 def classify_user_query(query, classifier, vectorizer):
     """Classifies a query and returns confident intents and the top time entity."""
-    INTENT_THRESHOLD = 0.18
+    INTENT_THRESHOLD = 0.20
     features = extract_feature(query)
     query_features = word_feats(features)
     query_vectorized = vectorizer.transform([query_features])
@@ -110,7 +110,6 @@ def create_weather_database():
     """Creates the SQLite database and table."""
     conn = None
     try:
-        # FIXED: Changed name to match get_weather_info
         conn = sqlite3.connect('weather_database.db')
         cursor = conn.cursor()
         cursor.execute('''
@@ -135,23 +134,25 @@ def get_weather_info(city, time_entity, use_mock, geolocator):
     try:
         conn = sqlite3.connect('weather_database.db')
         cursor = conn.cursor()
+        #print(f"--- Checking database for: {city} ({time_entity}) ---")
+        
         cursor.execute("SELECT temperature, weather_conditions, wind_speed, rain, snowfall, snow_depth FROM weather_info WHERE city=? AND time_entity=?", (city, time_entity))
         cached_result = cursor.fetchone()
 
         if cached_result:
+            #print("--> Found in cache.")
             return {'temperature': cached_result[0], 'weather_conditions': cached_result[1], 'wind_speed': cached_result[2], 'rain': cached_result[3], 'snowfall': cached_result[4], 'snow_depth': cached_result[5]}
-
+        #print("--> Not in cache. Fetching new data...")
+        
         weather_info = {}
         if use_mock:
+            #print("--> Using MOCK data source.")
             if time_entity == 'today':
-                weather_info = {'temperature': '25°C', 'weather_conditions': 'Sunny',
-                                 'wind_speed': '15 km/h', 'rain': '0 mm', 
-                                 'snowfall': '0 mm', 'snow_depth': '0 cm'}
+                weather_info = {'temperature': '25°C', 'weather_conditions': 'Sunny', 'wind_speed': '15 km/h', 'rain': '0 mm', 'snowfall': '0 mm', 'snow_depth': '0 cm'}
             elif time_entity == 'tomorrow':
-                weather_info = {'temperature': '22°C', 'weather_conditions': 'Partly Cloudy', 
-                                'wind_speed': '20 km/h', 'rain': '2 mm', 
-                                'snowfall': '0 mm', 'snow_depth': '0 cm'}
+                weather_info = {'temperature': '22°C', 'weather_conditions': 'Partly Cloudy', 'wind_speed': '20 km/h', 'rain': '2 mm', 'snowfall': '0 mm', 'snow_depth': '0 cm'}
         else:
+            #print("--> Calling LIVE API...")
             try:
                 location = geolocator.geocode(city)
                 if not location: return {}
@@ -176,6 +177,7 @@ def get_weather_info(city, time_entity, use_mock, geolocator):
         if weather_info:
             cursor.execute('''INSERT OR REPLACE INTO weather_info VALUES (?, ?, ?, ?, ?, ?, ?, ?)''', (city, time_entity, weather_info['temperature'], weather_info['weather_conditions'], weather_info['wind_speed'], weather_info['rain'], weather_info['snowfall'], weather_info['snow_depth']))
             conn.commit()
+            # print("--> New data saved to database.")
         return weather_info
     except sqlite3.Error as e:
         print(f"Database error: {e}")
@@ -205,44 +207,13 @@ def generate_responses(intents, weather_info, responses_df, time_entity):
             response_list.append(template_series.values[0].format(**weather_info_with_time))
     return response_list
 
-# --- 5. DEFINE TELEGRAM HANDLER FUNCTIONS ---
-
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Sends a welcome message when the /start command is issued."""
-    await update.message.reply_text('Hello! I am a weather bot. Ask me about the weather for a specific city.')
-
-async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """The core function that processes every user message."""
-    user_query = update.message.text
+# --- 5. HELPER FUNCTION FOR REPLYING ---
+async def fetch_and_respond(update: Update, context: ContextTypes.DEFAULT_TYPE, predicted_intents, time_entity, cities):
+    """A helper function to fetch data and send the final reply."""
     
-    # 1. Classify the user's query
-    predicted_intents, predicted_time = classify_user_query(user_query, CLASSIFIER, VECTORIZER)
-    time_entity = predicted_time[0][0] if predicted_time else 'no_time'
-    cities = extract_cities(user_query, NLP_MODEL)
-    print(predicted_intents, predicted_time, cities)
-    intent_labels = [intent[0] for intent in predicted_intents]
-
-    # 2. Handle high-priority intents
-    if 'goodbye' in intent_labels:
-        await update.message.reply_text(responses_df[responses_df['intent'] == 'goodbye']['response_template'].values[0])
-        return
-
-    if 'greet' in intent_labels and len(intent_labels) == 1:
-        await update.message.reply_text(responses_df[responses_df['intent'] == 'greet']['response_template'].values[0])
-        return
-        
-    if not predicted_intents:
-        await update.message.reply_text(responses_df[responses_df['intent'] == 'unknown_intent']['response_template'].values[0])
-        return
-
-    # 3. Handle missing information
-    requires_city = any(intent[0] not in ['ask_capabilities'] for intent in predicted_intents)
-    if requires_city and not cities:
-        await update.message.reply_text("I can help with that! For which city would you like the weather forecast?")
-        return 
-
-    # 4. Fetch data and respond
     final_responses_text = ""
+    requires_city = any(intent[0] not in ['ask_capabilities'] for intent in predicted_intents)
+    
     if not requires_city:
          responses = generate_responses(predicted_intents, {}, responses_df, time_entity)
          final_responses_text = "\n".join(f"- {res}" for res in responses)
@@ -251,17 +222,75 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             weather_info = get_weather_info(city, time_entity, use_mock=USE_MOCK_DATA, geolocator=GEOLOCATOR)
             if weather_info:
                 responses = generate_responses(predicted_intents, weather_info, responses_df, time_entity)
-                final_responses_text += f"For {city} ({time_entity}):\n" + "\n".join(f"- {res}" for res in responses) + "\n\n"
+                final_responses_text += f"For {city}:\n" + "\n".join(f"- {res}" for res in responses) + "\n\n"
             else:
                 final_responses_text += f"Sorry, I couldn't find weather information for {city}.\n"
 
-    # 5. Send the final compiled message
+    # Send the final message
     if final_responses_text:
         await update.message.reply_text(final_responses_text.strip())
     else:
         await update.message.reply_text(responses_df[responses_df['intent'] == 'unknown_intent']['response_template'].values[0])
 
-# --- 6. MAIN FUNCTION TO SET UP AND RUN THE BOT ---
+# --- 6. DEFINE TELEGRAM HANDLER FUNCTIONS  ---
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Sends a welcome message and clears any previous state."""
+    context.user_data.clear() 
+    await update.message.reply_text('Hello! I am a weather bot. Ask me about the weather for a specific city.')
+
+async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """The core function that processes every user message with state."""
+    user_query = update.message.text
+    expecting = context.user_data.get('expecting')
+
+    if expecting == 'city':
+        cities = extract_cities(user_query, NLP_MODEL)
+        if not cities:
+            await update.message.reply_text("I'm sorry, that doesn't look like a city. Please try again, or ask a new question.")
+            return 
+        predicted_intents = context.user_data.get('saved_intents')
+        time_entity = context.user_data.get('saved_time')
+        context.user_data.clear()
+        await fetch_and_respond(update, context, predicted_intents, time_entity, cities)
+
+    else:
+        predicted_intents, predicted_time = classify_user_query(user_query, CLASSIFIER, VECTORIZER)
+        time_entity = predicted_time[0][0] if predicted_time else 'no_time'
+        cities = extract_cities(user_query, NLP_MODEL)
+        intent_labels = [intent[0] for intent in predicted_intents]
+
+        # Handle high-priority intents
+        if 'goodbye' in intent_labels:
+            await update.message.reply_text(responses_df[responses_df['intent'] == 'goodbye']['response_template'].values[0])
+            context.user_data.clear() # Clear state on goodbye
+            return
+
+        if 'greet' in intent_labels and len(intent_labels) == 1:
+            await update.message.reply_text(responses_df[responses_df['intent'] == 'greet']['response_template'].values[0])
+            context.user_data.clear()
+            return
+            
+        if not predicted_intents:
+            await update.message.reply_text(responses_df[responses_df['intent'] == 'unknown_intent']['response_template'].values[0])
+            context.user_data.clear()
+            return
+
+        # Handle missing information
+        requires_city = any(intent[0] not in ['ask_capabilities'] for intent in predicted_intents)
+        
+        if requires_city and not cities:
+            # --- SAVE THE STATE ---
+            context.user_data['expecting'] = 'city'
+            context.user_data['saved_intents'] = predicted_intents
+            context.user_data['saved_time'] = time_entity
+            
+            await update.message.reply_text("I can help with that! For which city would you like the weather forecast?")
+            return
+
+        # If all info is present, fetch data and respond
+        await fetch_and_respond(update, context, predicted_intents, time_entity, cities)
+
+# --- 7. MAIN FUNCTION TO SET UP AND RUN THE BOT ---
 def main() -> None:
     """Sets up the Telegram bot and starts it."""
     token = os.getenv('TOKEN')
@@ -271,6 +300,7 @@ def main() -> None:
     application = Application.builder().token(token).build()
     create_weather_database()
 
+    # This is where the handlers are "registered"
     application.add_handler(CommandHandler("start", start))
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
 
@@ -279,7 +309,6 @@ def main() -> None:
 
 if __name__ == '__main__':
     # Download NLTK data needed for preprocessing
-    nltk.download('stopwords', quiet=True)
     nltk.download('averaged_perceptron_tagger', quiet=True)
     nltk.download('wordnet', quiet=True)
     nltk.download('averaged_perceptron_tagger_eng', quiet=True)

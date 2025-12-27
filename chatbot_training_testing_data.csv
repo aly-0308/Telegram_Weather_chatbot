@@ -9,7 +9,26 @@ what's the temp like right now?,ask_temperature,now
 give me the temperature forecast for tomorrow,ask_temperature,tomorrow
 is it cold outside?,ask_temperature,no_time
 will it be warm later today?,ask_temperature,today
-,,
+What is the temprature?,ask_temperature,no_time
+How many degrees is it right now?,ask_temperature,now
+Tell me the degrees for today,ask_temperature,today
+What will the temperature be tomorow?,ask_temperature,tomorrow
+Is it hot or cold out?,ask_temperature,no_time
+temp query,ask_temperature,no_time
+how cold is it going to be tonight?,ask_temperature,today
+temperature now,ask_temperature,now
+is it going to be hot tomorrow?,ask_temperature,tomorrow
+what is the high for today?,ask_temperature,today
+what is the low for tomorrow?,ask_temperature,tomorrow
+current temp,ask_temperature,now
+Will I need a jacket today?,ask_temperature,today
+Is it t-shirt weather?,ask_temperature,no_time
+What's the heat index?,ask_temperature,no_time
+How's the temperature looking for tomorrow?,ask_temperature,tomorrow
+temp for today,ask_temperature,today
+what is the temprture now?,ask_temperature,now
+feels like temp?,ask_temperature,no_time
+degrees outside?,ask_temperature,no_time
 Is it sunny or cloudy tomorrow morning ?,ask_weather_conditions,tomorrow
 Is it sunny or cloudy ?,ask_weather_conditions,no_time
 Is it sunny or cloudy currently ?,ask_weather_conditions,now
@@ -19,94 +38,264 @@ should I expect clear skies today?,ask_weather_conditions,today
 what are the conditions for tomorrow?,ask_weather_conditions,tomorrow
 how's the weather looking right now?,ask_weather_conditions,now
 is it looking nice out there?,ask_weather_conditions,no_time
-,,
+What is the wether?,ask_weather_conditions,no_time
+Tell me the forecast,ask_weather_conditions,no_time
+What are the wether condtions?,ask_weather_conditions,no_time
+Will it be clear today?,ask_weather_conditions,today
+Is it overcast?,ask_weather_conditions,no_time
+What is the forecast for tomorow?,ask_weather_conditions,tomorrow
+How is the weather?,ask_weather_conditions,no_time
+What's the outlook for today?,ask_weather_conditions,today
+Is it foggy?,ask_weather_conditions,no_time
+Current weather conditions,ask_weather_conditions,now
+Is it clear skies?,ask_weather_conditions,no_time
+Will it be sunny?,ask_weather_conditions,no_time
+Is it cloudy?,ask_weather_conditions,no_time
+forecast for now,ask_weather_conditions,now
+weather tomorrow,ask_weather_conditions,tomorrow
+how does it look outside?,ask_weather_conditions,no_time
+what is the sky like?,ask_weather_conditions,no_time
+weather today,ask_weather_conditions,today
+is it misty?,ask_weather_conditions,no_time
+will it be a nice day?,ask_weather_conditions,no_time
+What are the wether conditions tomorow?,ask_weather_conditions,tomorrow
 Tell me the wind speed currently,ask_wind_speed,now
 is it windy today?,ask_wind_speed,today
 how strong is the wind now?,ask_wind_speed,now
 what's the wind forecast for tomorrow?,ask_wind_speed,tomorrow
 tell me about the wind,ask_wind_speed,no_time
 will it be breezy later?,ask_wind_speed,today
-,,
+What is the wind speed?,ask_wind_speed,no_time
+Is it wndy?,ask_wind_speed,no_time
+How fast is the wind blowing?,ask_wind_speed,no_time
+What are the wind conditions?,ask_wind_speed,no_time
+wind speed for today,ask_wind_speed,today
+Are there strong winds tomorrow?,ask_wind_speed,tomorrow
+current wind,ask_wind_speed,now
+Is it breezy outside?,ask_wind_speed,no_time
+windy conditions?,ask_wind_speed,no_time
+tell me the wind speed,ask_wind_speed,no_time
+how windy is it?,ask_wind_speed,no_time
+Is there a gale warning?,ask_wind_speed,no_time
+wind check,ask_wind_speed,no_time
+wind speed now,ask_wind_speed,now
+wind tomorrow,ask_wind_speed,tomorrow
+how breezy is it going to be?,ask_wind_speed,no_time
+What is the wind speed tomorow?,ask_wind_speed,tomorrow
+Is it calm?,ask_wind_speed,no_time
+wind status,ask_wind_speed,no_time
+is it too windy to go out?,ask_wind_speed,no_time
+what is the wind speed today?,ask_wind_speed,today
+how bad is the wind?,ask_wind_speed,no_time
+wind?,ask_wind_speed,no_time
+is there a breeze?,ask_wind_speed,no_time
 Will it rain this evening?,ask_rain,today
 should I take an umbrella today?,ask_rain,today
 any chance of rain tomorrow?,ask_rain,tomorrow
 is it raining right now?,ask_rain,now
 what is the precipitation forecast?,ask_rain,no_time
 does it look like rain?,ask_rain,today
-,,
+Is it going to rain?,ask_rain,no_time
+Is it raining?,ask_rain,no_time
+Do I need an umbrela?,ask_rain,no_time
+What is the chance of rain?,ask_rain,no_time
+Will it shower today?,ask_rain,today
+Is it drizzling?,ask_rain,no_time
+Any precipitation expected tomorow?,ask_rain,tomorrow
+rain forecast,ask_rain,no_time
+is it raining outside?,ask_rain,now
+will it rain?,ask_rain,no_time
+chance of rain?,ask_rain,no_time
+is it wet outside?,ask_rain,no_time
+is it going to rain later?,ask_rain,today
+what is the rain situation tomorrow?,ask_rain,tomorrow
+rain now?,ask_rain,now
+do i need a raincoat?,ask_rain,no_time
+any rain today?,ask_rain,today
+precipitation?,ask_rain,no_time
+is it raining heavily?,ask_rain,no_time
+tell me about the rain,ask_rain,no_time
+is it just drizzling?,ask_rain,no_time
+will it pour?,ask_rain,no_time
+what is the chance of rain today?,ask_rain,today
+rain tomorow?,ask_rain,tomorrow
 How much current snowfall is expected?,ask_snowfall,now
 is it going to snow today?,ask_snowfall,today
 how much snow are we getting tomorrow?,ask_snowfall,tomorrow
+will we see any flakes later?,ask_snowfall,today
+Is it going to snow?,ask_snowfall,no_time
+Is it snowing?,ask_snowfall,no_time
+How much snow is expected?,ask_snowfall,no_time
+What is the snow forecast?,ask_snowfall,no_time
+Is it snowing right now?,ask_snowfall,now
+Will it snow tomorow?,ask_snowfall,tomorrow
+Any snow today?,ask_snowfall,today
+Chance of snow?,ask_snowfall,no_time
+Will there be a blizzard?,ask_snowfall,no_time
+snowfall accumulation?,ask_snowfall,no_time
+are we getting snow?,ask_snowfall,no_time
+snowfall now,ask_snowfall,now
+snowfall today,ask_snowfall,today
+snowfall tomorrow,ask_snowfall,tomorrow
+tell me about the snow,ask_snowfall,no_time
+any flurries?,ask_snowfall,no_time
+how much snow?,ask_snowfall,no_time
+is it snowing outside?,ask_snowfall,now
+will it snow later?,ask_snowfall,today
+is a snowstorm coming?,ask_snowfall,no_time
+snow prediction,ask_snowfall,no_time
+what is the snow report?,ask_snowfall,no_time
+how many inches of snow?,ask_snowfall,no_time
+is it sleeting?,ask_snowfall,no_time
+expecting snow?,ask_snowfall,no_time
+What is the snowfal?,ask_snowfall,no_time
 Any information about snow depth now?,ask_snow_depth,now
 is there any snow on the ground?,ask_snow_depth,now
 check for snow accumulation,ask_snow_depth,no_time
-will we see any flakes later?,ask_snowfall,today
-,,
+What is the snow depth?,ask_snow_depth,no_time
+How much snow is on the ground?,ask_snow_depth,now
+Tell me the snow depth,ask_snow_depth,no_time
+What is the snow accumulation?,ask_snow_depth,no_time
+snow depth today,ask_snow_depth,today
+What is the snow depth tomorow?,ask_snow_depth,tomorrow
+Is there snow on the ground now?,ask_snow_depth,now
+how deep is the snow?,ask_snow_depth,no_time
+current snow depth,ask_snow_depth,now
+snow on ground?,ask_snow_depth,no_time
+what is the snow level?,ask_snow_depth,no_time
+snow depth report,ask_snow_depth,no_time
+is there a lot of snow outside?,ask_snow_depth,now
+how many inches of snow on the ground?,ask_snow_depth,now
+what is the snowpack?,ask_snow_depth,no_time
+snow accumulation status,ask_snow_depth,no_time
+snow depth?,ask_snow_depth,no_time
+how much snow is there?,ask_snow_depth,no_time
+is there still snow on the ground?,ask_snow_depth,now
+snow depth tomorrow,ask_snow_depth,tomorrow
+tell me about the snow on the ground,ask_snow_depth,no_time
+what is the current snow depth?,ask_snow_depth,now
+snow accumulation today,ask_snow_depth,today
+What is the snow depht?,ask_snow_depth,no_time
+how much snow is sticking?,ask_snow_depth,no_time
+is the snow deep?,ask_snow_depth,no_time
+snow levels,ask_snow_depth,no_time
 Hello! Hi there.,greet,no_time
 hey there,greet,no_time
 good morning,greet,no_time
 how are you,greet,no_time
 hi,greet,no_time
-good day,greet,no_time
-good afternoon,greet,no_time
-morning,greet,no_time
-good evening,greet,no_time
-greetings,greet,no_time
-howdy,greet,no_time
-nice to meet,greet,no_time
-how is it going,greet,no_time
-how is life,greet,no_time
-how do you do,greet,no_time
-how r u,greet,no_time
-are you ok,greet,no_time
-hows it hanging,greet,no_time
-hows it going,greet,no_time
-,,
+Hello,greet,no_time
+Hey,greet,no_time
+Hi bot,greet,no_time
+Good afternoon,greet,no_time
+Good evening,greet,no_time
+What's up?,greet,no_time
+Howdy,greet,no_time
+Hi there,greet,no_time
+Helo,greet,no_time
+Greetings,greet,no_time
+Hey bot,greet,no_time
+Yo,greet,no_time
+Hi!,greet,no_time
+Hello.,greet,no_time
+Heya,greet,no_time
+How are you doing?,greet,no_time
+How's it going?,greet,no_time
+What's new?,greet,no_time
+Hiya,greet,no_time
+Heyy,greet,no_time
+Good day,greet,no_time
+"Hi, how are you?",greet,no_time
+"Hello, bot",greet,no_time
+Hi assistant,greet,no_time
+helo there,greet,no_time
+bye,goodbye,no_time
+goodbye,goodbye,no_time
+see you later,goodbye,no_time
+exit,goodbye,no_time
+quit,goodbye,no_time
+Bye bye,goodbye,no_time
+Cya,goodbye,no_time
+See ya,goodbye,no_time
+I'm done,goodbye,no_time
+That's all,goodbye,no_time
+I have to go,goodbye,no_time
+Talk to you later,goodbye,no_time
+I'm out,goodbye,no_time
+End chat,goodbye,no_time
+Stop,goodbye,no_time
+That's it,goodbye,no_time
+I'm leaving,goodbye,no_time
+OK bye,goodbye,no_time
+Bye now,goodbye,no_time
+Got to go,goodbye,no_time
+farewell,goodbye,no_time
+q,goodbye,no_time
+end,goodbye,no_time
+nothing else,goodbye,no_time
+no more questions,goodbye,no_time
+thanks bye,goodbye,no_time
+thank you goodbye,goodbye,no_time
+I'm finished,goodbye,no_time
+bye!,goodbye,no_time
+goodby,goodbye,no_time
+what can you do?,ask_capabilities,no_time
+how can you help?,ask_capabilities,no_time
+what are your abilities?,ask_capabilities,no_time
+help,ask_capabilities,no_time
+What do you do?,ask_capabilities,no_time
+What info can you give me?,ask_capabilities,no_time
+What are your features?,ask_capabilities,no_time
+Tell me what you can do,ask_capabilities,no_time
+What are your functions?,ask_capabilities,no_time
+What kind of info do you have?,ask_capabilities,no_time
+How do you work?,ask_capabilities,no_time
+What is your purpose?,ask_capabilities,no_time
+What are you for?,ask_capabilities,no_time
+What can you tell me?,ask_capabilities,no_time
+Can you help me?,ask_capabilities,no_time
+What are your skills?,ask_capabilities,no_time
+info,ask_capabilities,no_time
+what are your commands?,ask_capabilities,no_time
+what can i ask you?,ask_capabilities,no_time
+tell me more about you,ask_capabilities,no_time
+what questions can i ask?,ask_capabilities,no_time
+what is this bot about?,ask_capabilities,no_time
+what are you capable of?,ask_capabilities,no_time
+how do i use this bot?,ask_capabilities,no_time
+what are your capabilites?,ask_capabilities,no_time
+help menu,ask_capabilities,no_time
+what can you do for me?,ask_capabilities,no_time
+options,ask_capabilities,no_time
+what services do you offer?,ask_capabilities,no_time
+what else can you do?,ask_capabilities,no_time
+Random query.,unknown_intent,no_time
 what's the UV index for tomorrow?,unknown_intent,tomorrow
 book me a flight to Berlin,unknown_intent,no_time
 what time does the sun set today?,unknown_intent,today
 tell me a joke,unknown_intent,no_time
 where is the closest restaurant?,unknown_intent,no_time
-Random query.,unknown_intent,no_time
-,,
-bye,goodbye,no_time
-good bye,goodbye,no_time
-goodbye,goodbye,no_time
-good by,goodbye,no_time
-ok good bye,goodbye,no_time
-see ya,goodbye,no_time
-c u,goodbye,no_time
-cu,goodbye,no_time
-see you later,goodbye,no_time
-laters,goodbye,no_time
-laters baby,goodbye,no_time
-good night,goodbye,no_time
-cee you later,goodbye,no_time
-goodbye,goodbye,no_time
-have a nice day,goodbye,no_time
-see you around,goodbye,no_time
-bye bye,goodbye,no_time
-thanks,goodbye,no_time
-thank you,goodbye,no_time
-thanks very much,goodbye,no_time
-cheers,goodbye,no_time
-exit,goodbye,no_time
-quit,goodbye,no_time
-great talk,goodbye,no_time
-,,
-what can you do,ask_capabilities,no_time
-what are your capabilities,ask_capabilities,no_time
-what are you good at,ask_capabilities,no_time
-what are you good for,ask_capabilities,no_time
-any instructions,ask_capabilities,no_time
-instructions,ask_capabilities,no_time
-how do i use this,ask_capabilities,no_time
-info,ask_capabilities,no_time
-information,ask_capabilities,no_time
-help,ask_capabilities,no_time
-can you help me,ask_capabilities,no_time
-who are you,ask_capabilities,no_time
-are you a bot,ask_capabilities,no_time
-what is your name,ask_capabilities,no_time
-are you human,ask_capabilities,no_time
-what are you,ask_capabilities,no_time
+Play music,unknown_intent,no_time
+Set a timer for 5 minutes,unknown_intent,no_time
+What is the capital of France?,unknown_intent,no_time
+How old are you?,unknown_intent,no_time
+Who made you?,unknown_intent,no_time
+What is your name?,unknown_intent,no_time
+asdflkjh,unknown_intent,no_time
+12345,unknown_intent,no_time
+What's my schedule today?,unknown_intent,today
+Can you order a pizza?,unknown_intent,no_time
+What is the meaning of life?,unknown_intent,no_time
+Who won the game last night?,unknown_intent,today
+What are the stock prices?,unknown_intent,no_time
+How to bake a cake?,unknown_intent,no_time
+What is 2+2?,unknown_intent,no_time
+Do you like me?,unknown_intent,no_time
+Tell me a fun fact,unknown_intent,no_time
+What's the news today?,unknown_intent,today
+Send an email to John,unknown_intent,no_time
+What is the time?,unknown_intent,no_time
+What is the date today?,unknown_intent,today
+Tell me about yourself,unknown_intent,no_time
+Can you help me with my homework?,unknown_intent,no_time
+What is the UV indx tomorow?,unknown_intent,tomorrow
